@@ -1,0 +1,22 @@
+#version 410
+layout (location = 0) in vec3 position;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+out vec3 vViewRay;
+out mat4 cameraToWorldMatrix;
+out mat4 invProjectionMatrix;
+
+void main() 
+{
+	vViewRay = position;
+	vViewRay = (inverse(view) * vec4(vViewRay, 0.0)).xyz;
+	
+	cameraToWorldMatrix = inverse(view);
+	invProjectionMatrix = inverse(projection);
+
+	//gl_Position = vec4(gl_VertexID & 1, gl_VertexID >> 1, 0.0, 0.5) * 4.0 - 1.0;
+	gl_Position = projection * view * model * vec4(position, 1.0f);
+}
