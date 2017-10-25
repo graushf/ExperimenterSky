@@ -9,7 +9,7 @@
 #include "Shader.h"
 #include "Camera.h"
 
-struct GuiTextureData {
+struct LensFlareData {
 	GLuint VAO;
 	GLuint EBO;
 	GLuint texture;
@@ -17,23 +17,23 @@ struct GuiTextureData {
 	int number_vertices;
 };
 
-class GuiTexture {
-	
+class LensFlare {
+
 public:
-	GuiTexture(std::string texture, glm::vec2 position, glm::vec2 scale, Camera* camera);
+	LensFlare(std::string texture, glm::vec2 position, glm::vec2 scale, Camera* camera);
 
 	std::string getTexture();
 	glm::vec2 getPosition();
 	glm::vec2 getScale();
-	void draw(int viewMode);
+	void setPosition(glm::vec2 position);
+	void draw(float brightness, int viewMode);
 
 private:
-	GuiTextureData guiTextureData;
+	LensFlareData lensFlareData;
 	std::string texture;
 	glm::vec2 position;
 	glm::vec2 scale;
 	Camera* camera;
 
 	void loadToVAO();
-	
 };

@@ -1,33 +1,38 @@
-#include "GuiTexture.h"
+#include "LensFlare.h"
 
-GuiTexture::GuiTexture(std::string texture, glm::vec2 position, glm::vec2 scale, Camera* camera)
+LensFlare::LensFlare(std::string texture, glm::vec2 position, glm::vec2 scale, Camera* camera)
 {
-	GuiTexture::texture = texture;
-	GuiTexture::position = position;
-	GuiTexture::scale = scale;
+	this->texture = texture;
+	this->position = position;
+	this->scale = scale;
 	this->camera = camera;
 
 	loadToVAO();
 }
 
-std::string GuiTexture::getTexture()
+std::string LensFlare::getTexture()
 {
 	return texture;
 }
 
-glm::vec2 GuiTexture::getPosition()
+glm::vec2 LensFlare::getPosition()
 {
 	return position;
 }
 
-glm::vec2 GuiTexture::getScale()
+void LensFlare::setPosition(glm::vec2 position)
+{
+	this->position = position;
+}
+
+glm::vec2 LensFlare::getScale()
 {
 	return scale;
 }
 
-void GuiTexture::loadToVAO()
+void LensFlare::loadToVAO()
 {
-	Shader shader = Shader("./shaders/guiTexture.vertex", "./shaders/guiTexture.frag");
+	Shader shader = Shader("./shaders/shaderLensFlare.vertex", "./shaders/shaderLensFlare.frag");
 
 	GLfloat vertices[] = {
 		-1.0f, 1.0f,
@@ -70,9 +75,9 @@ void GuiTexture::loadToVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	guiTextureData.VAO = quadVAO;
-	guiTextureData.shader = shader;
-	guiTextureData.EBO = quadEBO;
+	lensFlareData.VAO = quadVAO;
+	lensFlareData.shader = shader;
+	lensFlareData.EBO = quadEBO;
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0); // Unbind VAO
@@ -95,10 +100,10 @@ void GuiTexture::loadToVAO()
 	SOIL_free_image_data(image_plane);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	guiTextureData.texture = textureQuad;
+	lensFlareData.texture = textureQuad;
 }
 
-void GuiTexture::draw(int viewMode)
+void LensFlare::draw(float brightness, int viewMode)
 {
 	if (viewMode == 0)
 	{
@@ -111,11 +116,12 @@ void GuiTexture::draw(int viewMode)
 	// Additive Blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	guiTextureData.shader.Use();
+	lensFlareData.shader.Use();
 	// Bind Textures using texture units
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, guiTextureData.texture);
-	glUniform1i(glGetUniformLocation(guiTextureData.shader.Program, "textureSampler"), 0);
+	glBindTexture(GL_TEXTURE_2D, lensFlareData.texture);
+	glUniform1i(glGetUniformLocation(lensFlareData.shader.Program, "textureSampler"), 0);
+	glUniform1f(glGetUniformLocation(lensFlareData.shader.Program, "brightness"), brightness);
 
 	// Create camera transformations
 	glm::mat4 view;
@@ -123,13 +129,13 @@ void GuiTexture::draw(int viewMode)
 	glm::mat4 projection;
 	projection = camera->GetPerspectiveMatrix();
 	// Get the uniform locations
-	
+
 	glm::mat4 transform;
 	transform = glm::translate(transform, glm::vec3(position.x, position.y, 0.0));
 	transform = glm::scale(transform, glm::vec3(scale.x, scale.y, 1.0));
-	GLuint loc = glGetUniformLocation(guiTextureData.shader.Program, "transformationMatrix");
-	glUniformMatrix4fv(glGetUniformLocation(guiTextureData.shader.Program, "transformationMatrix"), 1, GL_FALSE, glm::value_ptr(transform));
-	glBindVertexArray(guiTextureData.VAO);
+	GLuint loc = glGetUniformLocation(lensFlareData.shader.Program, "transformationMatrix");
+	glUniformMatrix4fv(glGetUniformLocation(lensFlareData.shader.Program, "transformationMatrix"), 1, GL_FALSE, glm::value_ptr(transform));
+	glBindVertexArray(lensFlareData.VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);

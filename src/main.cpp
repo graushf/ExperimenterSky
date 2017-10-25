@@ -32,6 +32,10 @@
 #include "GuiTexture.h"
 #include "GuiRenderer.h"
 
+#include "LensFlare.h"
+#include "LensFlareRenderer.h"
+#include "LensFlareManager.h"
+
 // Properties
 GLuint screenWidth = 800, screenHeight = 600;
 
@@ -227,16 +231,37 @@ int main()
 	geodesicSphere->createAdvancedGeodesicsphereGeom();
 	CloudModel2D* cloudModel2D = new CloudModel2D(camera, screenWidth, screenHeight);
 	SkyClouds* skyClouds = new SkyClouds(camera, screenWidth, screenHeight);
-	GuiTexture* guiTexture = new GuiTexture("./resources/awesomeface.png", glm::vec2(0.5f, 0.5f), glm::vec2(0.2f, 0.2f), camera);
-	GuiTexture* guiTexture2 = new GuiTexture("./resources/container.jpg", glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f, 0.3f), camera);
-	GuiTexture* guiTexture3 = new GuiTexture("./resources/moon.png", glm::vec2(-0.5f, -0.5f), glm::vec2(0.4f, 0.4f), camera);
-	GuiTexture* guiTexture4 = new GuiTexture("./resources/sun_texture.png", glm::vec2(0.5f, -0.5f), glm::vec2(0.5f, 0.5f), camera);
+	GuiTexture* guiTexture = new GuiTexture("./resources/lensFlare/tex8.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.2f, 0.3f), camera);
+	//GuiTexture* guiTexture2 = new GuiTexture("./resources/container.jpg", glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f, 0.3f), camera);
+	//GuiTexture* guiTexture3 = new GuiTexture("./resources/moon.png", glm::vec2(-0.5f, -0.5f), glm::vec2(0.4f, 0.4f), camera);
+	//GuiTexture* guiTexture4 = new GuiTexture("./resources/sun_texture.png", glm::vec2(0.5f, -0.5f), glm::vec2(0.5f, 0.5f), camera);
 	std::vector<GuiTexture*> guiTextureList;
 	guiTextureList.push_back(guiTexture);
-	guiTextureList.push_back(guiTexture2);
-	guiTextureList.push_back(guiTexture3);
-	guiTextureList.push_back(guiTexture4);
+	//guiTextureList.push_back(guiTexture2);
+	//guiTextureList.push_back(guiTexture3);
+	//guiTextureList.push_back(guiTexture4);
 	GuiRenderer* guiRenderer = new GuiRenderer();
+
+	LensFlare* lensFlare = new LensFlare("./resources/lensFlare/tex2.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare2 = new LensFlare("./resources/lensFlare/tex3.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare3 = new LensFlare("./resources/lensFlare/tex4.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare4 = new LensFlare("./resources/lensFlare/tex5.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare5 = new LensFlare("./resources/lensFlare/tex6.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare6 = new LensFlare("./resources/lensFlare/tex7.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	LensFlare* lensFlare7 = new LensFlare("./resources/lensFlare/tex8.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+
+	std::vector<LensFlare*> lensFlareList;
+	lensFlareList.push_back(lensFlare);
+	lensFlareList.push_back(lensFlare2);
+	lensFlareList.push_back(lensFlare3);
+	lensFlareList.push_back(lensFlare4);
+	lensFlareList.push_back(lensFlare5);
+	lensFlareList.push_back(lensFlare6);
+	lensFlareList.push_back(lensFlare7);
+
+	//LensFlareRenderer* lensFlareRenderer = new LensFlareRenderer();
+
+	LensFlareManager* lensFlareManager = new LensFlareManager(0.4f, lensFlareList);
 
 
 	// Game Loop
@@ -269,7 +294,10 @@ int main()
 
 		//skyClouds->draw(toggleModeDraw);
 
-		guiRenderer->render(guiTextureList, toggleModeDraw);
+		lensFlareManager->render(camera, geometries->sunPos);
+
+		//guiRenderer->render(guiTextureList, toggleModeDraw);
+		//lensFlareRenderer->render(lensFlareList, toggleModeDraw);
 		//guiTexture->draw(toggleModeDraw);
 	
 		// Swap the buffers
