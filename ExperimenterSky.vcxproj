@@ -159,6 +159,9 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\GuiRenderer.cpp" />
     <ClCompile Include="src\GuiTexture.cpp" />
+    <ClCompile Include="src\LensFlare.cpp" />
+    <ClCompile Include="src\LensFlareManager.cpp" />
+    <ClCompile Include="src\LensFlareRenderer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -175,6 +178,9 @@
     <ClInclude Include="include\GuiRenderer.h" />
     <ClInclude Include="include\GuiTexture.h" />
     <ClInclude Include="include\Header.h" />
+    <ClInclude Include="include\LensFlare.h" />
+    <ClInclude Include="include\LensFlareManager.h" />
+    <ClInclude Include="include\LensFlareRenderer.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Skybox.h" />

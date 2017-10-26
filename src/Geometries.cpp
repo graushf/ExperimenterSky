@@ -212,6 +212,10 @@ void Geometries::createIcosahedronGeom() {
 
 void Geometries::renderIcosahedronGeom(glm::vec3 position, float distance, glm::vec3 color)
 {
+	std::cout << "SUN POSITION:      " << sunPos.x << "   " << sunPos.y << "   " << sunPos.z << std::endl;
+	glm::vec3 _position = position;
+	_position = glm::normalize(position);
+
 	icosahedronShader.Use();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	 // Create camera transformation
@@ -233,8 +237,8 @@ void Geometries::renderIcosahedronGeom(glm::vec3 position, float distance, glm::
 	glm::vec3 _aux1 = glm::vec3(distance * position.x, distance * position.y, distance * position.z);
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(distance * position.x, distance * position.y, distance * position.z));
-	model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+	model = glm::translate(model, glm::vec3(distance * _position.x, distance * _position.y, distance * _position.z));
+	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glBindVertexArray(icosahedronVAO);
@@ -465,9 +469,8 @@ void Geometries::updateGamma2() {
 
 
 void Geometries::updateSunPosition() {
-
 	// For timelapsing 
-	sunAltitude += 0.05;
+	//sunAltitude += 0.05;
 	if (sunAltitude > 85.0) {
 		//isNight = true;
 	}

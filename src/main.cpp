@@ -215,8 +215,8 @@ int main()
 
 	//geometries->initBillboards();
 
-	//geometries->createIcosahedronShader();
-	//geometries->createIcosahedronGeom();
+	geometries->createIcosahedronShader();
+	geometries->createIcosahedronGeom();
 
 	geometries->createSkyShader();
 	geometries->createSkyShaderAdv();
@@ -242,13 +242,20 @@ int main()
 	//guiTextureList.push_back(guiTexture4);
 	GuiRenderer* guiRenderer = new GuiRenderer();
 
-	LensFlare* lensFlare = new LensFlare("./resources/lensFlare/tex2.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare2 = new LensFlare("./resources/lensFlare/tex3.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare3 = new LensFlare("./resources/lensFlare/tex4.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare4 = new LensFlare("./resources/lensFlare/tex5.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare5 = new LensFlare("./resources/lensFlare/tex6.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare6 = new LensFlare("./resources/lensFlare/tex7.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
-	LensFlare* lensFlare7 = new LensFlare("./resources/lensFlare/tex8.png", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), camera);
+	/*LensFlare* lensFlare = new LensFlare("./resources/lensFlare/tex2.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.1f, 0.1f), camera);
+	LensFlare* lensFlare2 = new LensFlare("./resources/lensFlare/tex3.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.2f, 0.2f), camera);
+	LensFlare* lensFlare3 = new LensFlare("./resources/lensFlare/tex4.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.2f, 0.2f), camera);
+	LensFlare* lensFlare4 = new LensFlare("./resources/lensFlare/tex5.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.3f, 0.3f), camera);
+	LensFlare* lensFlare5 = new LensFlare("./resources/lensFlare/tex6.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.4f, 0.4f), camera);
+	LensFlare* lensFlare6 = new LensFlare("./resources/lensFlare/tex7.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.5f, 0.5f), camera);
+	LensFlare* lensFlare7 = new LensFlare("./resources/lensFlare/tex8.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.6f, 0.6f), camera);*/
+	LensFlare* lensFlare = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.1f, 0.1f), camera);
+	LensFlare* lensFlare2 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.2f, 0.2f), camera);
+	LensFlare* lensFlare3 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.2f, 0.2f), camera);
+	LensFlare* lensFlare4 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.3f, 0.3f), camera);
+	LensFlare* lensFlare5 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.4f, 0.4f), camera);
+	LensFlare* lensFlare6 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.5f, 0.5f), camera);
+	LensFlare* lensFlare7 = new LensFlare("./resources/awesomeface.png", glm::vec2(0.0f, 0.0f), glm::vec2(0.6f, 0.6f), camera);
 
 	std::vector<LensFlare*> lensFlareList;
 	lensFlareList.push_back(lensFlare);
@@ -287,7 +294,7 @@ int main()
 		geometries->renderSkyOnScreenAdv(toggleModeDraw);
 		// Draw plane
 		geometries->renderPlaneGeom();
-		//geometries->renderIcosahedronGeom(glm::vec3(0.0, 0.0, -1.0), +2.0);
+		geometries->renderIcosahedronGeom(geometries->sunPos, 10.0, glm::vec3(1.0, 0.0, 0.0));
 		
 		//cloudModel2D->updateCameraObject(camera);
 		//cloudModel2D->draw(10000, toggleModeDraw);
